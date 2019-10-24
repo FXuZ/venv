@@ -35,8 +35,14 @@ function lsvenvs() {
 
 function rmvenv() {
     if [[ -z $1 ]] ; then
-        echo "Must supply a virtualenv name"
+        echo "Must specify a virtualenv name"
     fi
+
+    while [[ -n $VIRTUAL_ENV ]] ; do
+        # Deactivate if virtualenv detected
+        deactivate
+    done
+    
     for env in $*; do
         rm -rf $VIRTENVPATH/$env
     done
@@ -56,4 +62,9 @@ function _err_direxist() {
     echo "\
         The directory $1 already exists and is not empty. Please remove it before creating a virtualenv.
         "
+}
+
+function _is_invenv() {
+    test $VIRTUAL_ENV
+    return $?
 }
