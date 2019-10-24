@@ -29,6 +29,19 @@ function venv() {
     fi
 }
 
+function lsvenvs() {
+    ls $VIRTENVPATH/
+}
+
+function rmvenv() {
+    if [[ -z $1 ]] ; then
+        echo "Must supply a virtualenv name"
+    fi
+    for env in $*; do
+        rm -rf $VIRTENVPATH/$env
+    done
+}
+
 function _err_nodir() {
     echo "\
         Virtualenv not found! Make sure you have installed the virtualenv $1.
