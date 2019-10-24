@@ -8,6 +8,10 @@ fi
 
 function activate() {
     if [[ -d "$VIRTENVPATH/$1" && -a "$VIRTENVPATH/$1/bin/activate" ]]; then
+        # deactivate any virtualenvs, if there is any
+        while [[ -n $VIRTUAL_ENV ]]; do
+            deactivate
+        done
         source $VIRTENVPATH/$1/bin/activate
     else
         _err_nodir $VIRTENVPATH/$1
